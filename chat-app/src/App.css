@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
 }
 
 .App-logo {
@@ -8,21 +8,54 @@
 }
 
 .App-header {
+  width: 100%;
+  margin: 0 auto;
   background-color: #222;
-  height: 150px;
+  height: 30px;
   padding: 20px;
   color: white;
+  align-items: center;
+  justify-content: center;
 }
 
 .App-title {
-  font-size: 1.5em;
+  text-align: center;
+  font-size: 1.1em;
 }
 
 .App-intro {
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.flex-item-center {
+  order: 0;
+  flex: 0 1 auto;
+  align-self: center;
+}
+
+.Chat-input {
+  width: 80%;
+}
+
+.chatmsgwrapper {
+  background: white;
+  border: 1px solid #ccc;
+  height: 4.5em;
+  padding: 0.25em;
+}
+
+.chatmsg {
+  width: 100%;
+  background: white;
+  font-family: sans-serif;
+  font-size: 1em;
+  border: 0 none;
+  padding: 0;
+  margin: 0;
+  height: 4.5em;
+  font-size: 1em;
+  overflow: auto;
+  -webkit-appearance: none;
+  border-radius: 0;
+  -webkit-border-radius: 0;
 }

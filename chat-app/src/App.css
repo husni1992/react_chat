@@ -38,7 +38,10 @@
 }
 
 .chatmsgwrapper {
-  background: white;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background: green;
   border: 1px solid #ccc;
   height: 4.5em;
   padding: 0.25em;

@@ -1,0 +1,21 @@
+.ownMessageBox {
+  border-radius: 7px;
+  margin-bottom: 5px;
+  padding: 10px;
+  width: 60%;
+  color: #555960;
+  background-color: #eaedf2;
+  float: left;
+  clear: both;
+}
+
+.otherMessageBox {
+  float: right;
+  border-radius: 7px;
+  margin-bottom: 5px;
+  padding: 10px;
+  width: 60%;
+  color: white;
+  background-color: #3931b4d1;
+  clear: both;
+}

@@ -4,6 +4,7 @@ import "./App.css";
 import socketClient from "./socket-client/socket-client";
 import Const from "./lib/Constants";
 import Utils from "./lib/Utils";
+import ChatList from "./components/ChatList/ChatList";
 
 const socket = socketClient();
 
@@ -11,7 +12,68 @@ class App extends Component {
   state = {
     chatInput: "",
     userRegistered: false,
-    userName: ""
+    userName: "",
+    messageList: [
+      {
+        id: 1,
+        sender: null,
+        text: "Test"
+      },
+      {
+        id: 2,
+        sender: '1212swsa',
+        text: "Test2"
+      },
+      {
+        id: 3,
+        sender: '1212swsa',
+        text: "Test3"
+      },
+      {
+        id: 1,
+        sender: null,
+        text: "Test"
+      },
+      {
+        id: 2,
+        sender: '1212swsa',
+        text: "Test2"
+      },
+      {
+        id: 3,
+        sender: '1212swsa',
+        text: "Test3"
+      },
+      {
+        id: 1,
+        sender: null,
+        text: "Test"
+      },
+      {
+        id: 2,
+        sender: '1212swsa',
+        text: "Test2"
+      },
+      {
+        id: 3,
+        sender: '1212swsa',
+        text: "Test3"
+      },{
+        id: 1,
+        sender: null,
+        text: "Test"
+      },
+      {
+        id: 2,
+        sender: '1212swsa',
+        text: "Test2"
+      },
+      {
+        id: 3,
+        sender: '1212swsa',
+        text: "Test3"
+      }
+    ]
   };
 
   componentDidMount() {
@@ -35,7 +97,7 @@ class App extends Component {
   }
 
   handleKeyPress = event => {
-    if (event.key == "Enter") {
+    if (event.key === "Enter") {
       event.preventDefault();
 
       socket.message("TestChat", this.state.chatInput, function() {
@@ -85,9 +147,13 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <header className="App-header">
+        <div className="App-header">
           <h1 className="App-title">{this.state.userName}, welcome to fast chat!</h1>
-        </header>
+        </div>
+
+        <div className="chatContainer">
+          <ChatList messageList={this.state.messageList} />
+        </div>
 
         <div className="chatmsgwrapper">
           <textarea

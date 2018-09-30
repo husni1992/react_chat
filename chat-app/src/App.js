@@ -108,7 +108,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h1 className="App-title">{this.state.userName}, welcome to fast chat!</h1>
+          <span className="App-title">{this.state.userName}, welcome to fast chat!</span>
         </div>
 
         <div className="chatContainer" id="scrollerChat">

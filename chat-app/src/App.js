@@ -17,7 +17,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    socket.registerHandler(message => {
+    socket.subscribeToMessages(message => {
       console.log(message);
       this.setState({
         messageList: [...this.state.messageList, message.message]
@@ -56,7 +56,7 @@ class App extends Component {
         timeStamp: new Date()
       };
 
-      socket.message("abcd", messageBody, function() {
+      socket.emitMessage("abcd", messageBody, function() {
         console.log("Message sent");
       });
 

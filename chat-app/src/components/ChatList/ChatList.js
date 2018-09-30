@@ -3,16 +3,13 @@ import "./Chatlist.styles.css";
 
 function ChatList(props) {
   return props.messageList.map((item, index) => {
-    if (item.sender === props.currentUser) {
-      return (
-        <div className="ownMessageBox" key={index}>
-          {item.text}
-        </div>
-      );
-    }
+    const isCurrentUser = item.sender === props.currentUser;
     return (
-      <div className="otherMessageBox" key={index}>
-        {item.text}
+      <div className={isCurrentUser ? "ownMessageBox" : "otherMessageBox"} key={index}>
+        <span>{item.text}</span>
+        <span style={{ marginLeft: 20, fontSize: 10, color: isCurrentUser ? "grey" : "white" }}>
+          {item.timeStamp}
+        </span>
       </div>
     );
   });

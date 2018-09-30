@@ -5,7 +5,7 @@ import socketClient from "./socket-client/socket-client";
 import Const from "./lib/Constants";
 import Utils from "./lib/Utils";
 import ChatList from "./components/ChatList/ChatList";
-
+const moment = require('moment');
 const socket = socketClient();
 
 class App extends Component {
@@ -53,7 +53,7 @@ class App extends Component {
         id: new Date().getTime(),
         sender: this.state.userName,
         text: event.target.value,
-        timeStamp: new Date()
+        timeStamp: moment().format('LLLL')
       };
 
       socket.emitMessage("abcd", messageBody, function() {

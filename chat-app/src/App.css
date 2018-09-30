@@ -64,7 +64,7 @@
 }
 
 .chatContainer {
-  margin-top: 5px;
+  margin: 5px 5px 0 5px;
   height: 400px;
   overflow:auto;
 }

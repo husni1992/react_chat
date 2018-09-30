@@ -13,72 +13,15 @@ class App extends Component {
     chatInput: "",
     userRegistered: false,
     userName: "",
-    messageList: [
-      {
-        id: 1,
-        sender: null,
-        text: "Test"
-      },
-      {
-        id: 2,
-        sender: '1212swsa',
-        text: "Test2"
-      },
-      {
-        id: 3,
-        sender: '1212swsa',
-        text: "Test3"
-      },
-      {
-        id: 1,
-        sender: null,
-        text: "Test"
-      },
-      {
-        id: 2,
-        sender: '1212swsa',
-        text: "Test2"
-      },
-      {
-        id: 3,
-        sender: '1212swsa',
-        text: "Test3"
-      },
-      {
-        id: 1,
-        sender: null,
-        text: "Test"
-      },
-      {
-        id: 2,
-        sender: '1212swsa',
-        text: "Test2"
-      },
-      {
-        id: 3,
-        sender: '1212swsa',
-        text: "Test3"
-      },{
-        id: 1,
-        sender: null,
-        text: "Test"
-      },
-      {
-        id: 2,
-        sender: '1212swsa',
-        text: "Test2"
-      },
-      {
-        id: 3,
-        sender: '1212swsa',
-        text: "Test3"
-      }
-    ]
+    messageList: []
   };
 
   componentDidMount() {
     socket.registerHandler(message => {
       console.log(message);
+      this.setState({
+        messageList: [...this.state.messageList, message.message]
+      });
     });
     const existingUser = Utils.getFromLocalStorage(Const.USER_NAME);
     if (existingUser) {
@@ -100,12 +43,20 @@ class App extends Component {
     if (event.key === "Enter") {
       event.preventDefault();
 
-      socket.message("TestChat", this.state.chatInput, function() {
+      const messageBody = {
+        id: new Date().getTime(),
+        sender: this.state.userName,
+        text: event.target.value,
+        timeStamp: new Date()
+      };
+
+      socket.message('abcd', messageBody, function() {
         console.log("Message sent");
       });
 
       this.setState({
-        chatInput: ""
+        chatInput: "",
+        messageList: [...this.state.messageList, messageBody]
       });
     }
   };
@@ -152,7 +103,7 @@ class App extends Component {
         </div>
 
         <div className="chatContainer">
-          <ChatList messageList={this.state.messageList} />
+          <ChatList currentUser={this.state.userName} messageList={this.state.messageList} />
         </div>
 
         <div className="chatmsgwrapper">

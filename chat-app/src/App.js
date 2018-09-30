@@ -22,6 +22,7 @@ class App extends Component {
       this.setState({
         messageList: [...this.state.messageList, message.message]
       });
+      this.scrollToBottom();
     });
     const existingUser = Utils.getFromLocalStorage(Const.USER_NAME);
     if (existingUser) {
@@ -39,6 +40,11 @@ class App extends Component {
       }, 0);
   }
 
+  scrollToBottom = id => {
+    const div = document.getElementById("scrollerChat");
+    div.scrollTop = div.scrollHeight - div.clientHeight;
+  };
+
   handleKeyPress = event => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -50,14 +56,17 @@ class App extends Component {
         timeStamp: new Date()
       };
 
-      socket.message('abcd', messageBody, function() {
+      socket.message("abcd", messageBody, function() {
         console.log("Message sent");
       });
 
-      this.setState({
-        chatInput: "",
-        messageList: [...this.state.messageList, messageBody]
-      });
+      this.setState(
+        {
+          chatInput: "",
+          messageList: [...this.state.messageList, messageBody]
+        },
+        this.scrollToBottom
+      );
     }
   };
 
@@ -102,7 +111,7 @@ class App extends Component {
           <h1 className="App-title">{this.state.userName}, welcome to fast chat!</h1>
         </div>
 
-        <div className="chatContainer">
+        <div className="chatContainer" id="scrollerChat">
           <ChatList currentUser={this.state.userName} messageList={this.state.messageList} />
         </div>
 

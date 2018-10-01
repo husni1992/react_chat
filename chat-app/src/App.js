@@ -5,7 +5,7 @@ import socketClient from "./socket-client/socket-client";
 import Const from "./lib/Constants";
 import Utils from "./lib/Utils";
 import ChatList from "./components/ChatList/ChatList";
-const moment = require('moment');
+const moment = require("moment");
 const socket = socketClient();
 
 class App extends Component {
@@ -16,7 +16,30 @@ class App extends Component {
     messageList: []
   };
 
+  deleteMessage(message) {
+    if (message.sender === this.state.userName) {
+      socket.deleteMessage(message.id);
+    }
+    console.log("subscribeToDeleteMessage", message.id);
+    const filteredMessages = this.state.messageList.filter(msg => msg.id !== message.id);
+    this.setState({
+      messageList: filteredMessages
+    });
+  }
+
+  deleteOthersMessage(event) {
+    if (event.messageId) {
+      const filteredMessages = this.state.messageList.filter(msg => msg.id !== event.messageId);
+      this.setState({
+        messageList: filteredMessages
+      });
+      return;
+    }
+  }
+
   componentDidMount() {
+    socket.subscribeToDeleteMessage(this.deleteOthersMessage.bind(this));
+
     socket.subscribeToMessages(message => {
       console.log(message);
       this.setState({
@@ -45,6 +68,11 @@ class App extends Component {
     div.scrollTop = div.scrollHeight - div.clientHeight;
   };
 
+  handleDeleteMessage = message => {
+    console.log("Deleting message: ", message.messageId);
+    this.deleteMessage(message);
+  };
+
   handleKeyPress = event => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -53,7 +81,7 @@ class App extends Component {
         id: new Date().getTime(),
         sender: this.state.userName,
         text: event.target.value,
-        timeStamp: moment().format('LLLL')
+        timeStamp: moment().format("LLLL")
       };
 
       socket.emitMessage("abcd", messageBody, function() {
@@ -112,7 +140,11 @@ class App extends Component {
         </div>
 
         <div className="chatContainer" id="scrollerChat">
-          <ChatList currentUser={this.state.userName} messageList={this.state.messageList} />
+          <ChatList
+            currentUser={this.state.userName}
+            messageList={this.state.messageList}
+            handleDeleteMessage={this.handleDeleteMessage}
+          />
         </div>
 
         <div className="chatmsgwrapper">
